@@ -1,6 +1,5 @@
 import pandas as pd
 import Pretrait as pt
-import Graphique as grph
 import ACP_Normée as a_n
 import ACP_Non_Normée as a_n_n
 from tkinter import *
@@ -8,6 +7,8 @@ from tkinter import filedialog
 import tkinter as tk
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
+
+
 #introduire ce fichier par l'interface graphique
 def main(path, norme=True):
     dataset = pd.read_csv(path,header=0)
@@ -31,6 +32,7 @@ def open_file ():
 def hna(c1, c2, mat):
     fig, ax = plt.subplots(1, 2, figsize=(12, 5))
     circle = Circle((0, 0), 1, facecolor="none", edgecolor="blue", linewidth=3)
+    
     # affichage du cercle de correlation
     ax[0].spines["top"].set_color("none")
     ax[0].spines["left"].set_position("zero")
@@ -53,6 +55,7 @@ def hna(c1, c2, mat):
     )
     ax[1].set_xlabel("c1")
     ax[1].set_ylabel("c2")
+    
     plt.show()
 
 norme = tk.IntVar()
@@ -67,12 +70,11 @@ def lancer():
     else:
         global norme
         global n_norme
-        (composants, coreelation) = main(url, True)
+        (composants, coreelation,Landas) = main(url, True)
         if n_norme.get() == 1:
-            (composants, coreelation) = main(url, False)
+            (composants, coreelation,Landas) = main(url, False)
 
         hna(composants[0], composants[1], coreelation)
-
 
 norme_button =  tk.Checkbutton(root, text='Normé',variable=norme, onvalue=1, offvalue=0)
 norme_button.pack()
@@ -86,6 +88,5 @@ button.pack()
 
 lanceur = Button(root, text = "lancer le programme", command = lancer)
 lanceur.pack()
-
 
 root.mainloop()

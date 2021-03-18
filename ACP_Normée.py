@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+import Pretrait as pt
 import ACP_Non_Normée as a_n_n
 
 #ACP Normée :
@@ -39,4 +41,4 @@ def ACP_N(dataset) :
   #print('Contribution absolue de chaque individu :\n'+str(Contr))  
   Coef=np.around(a_n_n.New_Correl(U,Landas,R),6)
   print('Corrélation avec les nouvelles variable : \n'+str(Coef))
-  return([C,Coef])
+  return(C,Coef,VVP[2])
