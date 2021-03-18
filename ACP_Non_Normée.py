@@ -27,8 +27,8 @@ def Vect_Val_Prop(V) :
   VVP=np.linalg.eig(V)
   Val_Prop=VVP[0]
   Vect_Prop=VVP[1]  
-#4-2-Choix des axes :
-#4-2-1-Calcul de l'inertie totale :
+  #4-2-Choix des axes :
+  #4-2-1-Calcul de l'inertie totale :
   I_t = V.trace()
 #4-2-2 Pourcentage des données exprimées par chaque valeur propre :
   Ex=[]
@@ -92,4 +92,7 @@ def ACP_N_N(dataset) :
   Coef=np.around(New_Correl(U,Landas,V),6)
   print('Corrélation avec les nouvelles variable : \n'+str(Coef))
   
-  return([VVP[2],C,Coef])
+  return([C,Coef])
+
+
+
