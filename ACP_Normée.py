@@ -39,4 +39,4 @@ def ACP_N(dataset) :
   #print('Contribution absolue de chaque individu :\n'+str(Contr))  
   Coef=np.around(a_n_n.New_Correl(U,Landas,R),6)
   print('Corrélation avec les nouvelles variable : \n'+str(Coef))
-  return(VVP[2],Landas,C,Coef)
+  return([C,Coef])
