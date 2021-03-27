@@ -21,27 +21,26 @@ def Var_Covar(Y) :
   return(V)
 
 
-#---4-Axes Principeaux :---
-def Vect_Val_Prop(V) :
+def Vect_Val_Prop(R) :
 #4-1-Vecteurs et valeurs propres :
-  VVP=np.linalg.eig(V)
-  Val_Prop=VVP[0]
-  Vect_Prop=VVP[1]  
-  #4-2-Choix des axes :
-  #4-2-1-Calcul de l'inertie totale :
-  I_t = V.trace()
+  Val_Prop, Vect_Prop = np.linalg.eig(R)
+  idx = Val_Prop.argsort()[::-1]   
+  Val_Prop = Val_Prop[idx]
+  Vect_Prop = Vect_Prop[:,idx]
+#4-2-Choix des axes :
+#4-2-1-Calcul de l'inertie totale :
+  I_t = R.trace()
 #4-2-2 Pourcentage des données exprimées par chaque valeur propre :
   Ex=[]
   for i in range(len(Val_Prop)) :
     Ex.append(Val_Prop[i]/I_t)
-  Ex=np.array(Ex) 
+  Ex=np.array(Ex)
 #4-2-3 Données exprimées cumulées :   
   for i in range(1,len(Val_Prop)) :
     Ex[i]=Ex[i]+Ex[i-1]      
-#4-2-4- Axes Choisis (97% des données sont récupérés avec Landa 1 et Landa 2) :
-  Landa1,Landa2,U1,U2 = Val_Prop[0],Val_Prop[1],Vect_Prop[0],Vect_Prop[1]
-  Landas = [Landa1,Landa2]
-  U=[U1,U2]
+#4-2-4- Axes Choisis (57% des données sont récupérés avec Landa 1 et Landa 2) :
+  Landas = [Val_Prop[0],Val_Prop[1],Val_Prop[2]]
+  U=[Vect_Prop[0],Vect_Prop[1],Vect_Prop[2]]
   return[Landas,U,Val_Prop]
 
 #---5-Calcul des composantes principales :---
@@ -92,7 +91,4 @@ def ACP_N_N(dataset) :
   Coef=np.around(New_Correl(U,Landas,V),6)
   print('Corrélation avec les nouvelles variable : \n'+str(Coef))
   
-  return([C,Coef])
-
-
-
+  return([C,Coef,VVP[2]])
